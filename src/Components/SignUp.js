@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Typography, TextField, Button, Container } from "@material-ui/core";
 
-const SignUp = ({ history }) => {
+const SignUp = () => {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -9,6 +10,8 @@ const SignUp = ({ history }) => {
     full_name: "",
     birthdate: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,79 +34,77 @@ const SignUp = ({ history }) => {
       if (!response.ok) {
         throw new Error("Failed to sign up");
       }
-      // Redirect to sign-in page after successful sign-up
-      history.push("/signin");
+      navigate("/signin");
     } catch (error) {
       console.error("Error signing up:", error);
-      // Handle error
     }
   };
 
   return (
-    <div>
-      <h2>Sign Up</h2>
+    <Container maxWidth="sm">
+      <Typography variant="h2">Sign Up</Typography>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="full_name">Full Name:</label>
-          <input
-            type="text"
-            id="full_name"
-            name="full_name"
-            value={formData.full_name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="birthdate">Birthdate:</label>
-          <input
-            type="date"
-            id="birthdate"
-            name="birthdate"
-            value={formData.birthdate}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit">Sign Up</button>
+        <TextField
+          variant="outlined"
+          label="Username"
+          id="username"
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
+          fullWidth
+          required
+        />
+        <TextField
+          variant="outlined"
+          label="Email"
+          id="email"
+          name="email"
+          type="email"
+          value={formData.email}
+          onChange={handleChange}
+          fullWidth
+          required
+        />
+        <TextField
+          variant="outlined"
+          label="Password"
+          id="password"
+          name="password"
+          type="password"
+          value={formData.password}
+          onChange={handleChange}
+          fullWidth
+          required
+        />
+        <TextField
+          variant="outlined"
+          label="Full Name"
+          id="full_name"
+          name="full_name"
+          value={formData.full_name}
+          onChange={handleChange}
+          fullWidth
+          required
+        />
+        <TextField
+          variant="outlined"
+          label="Birthdate"
+          id="birthdate"
+          name="birthdate"
+          type="date"
+          value={formData.birthdate}
+          onChange={handleChange}
+          fullWidth
+          required
+        />
+        <Button variant="contained" color="primary" type="submit">
+          Sign Up
+        </Button>
       </form>
-      <p>
+      <Typography>
         Already have an account? <Link to="/signin">Sign In</Link>
-      </p>
-    </div>
+      </Typography>
+    </Container>
   );
 };
 

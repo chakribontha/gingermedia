@@ -1,7 +1,29 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  Typography,
+  TextField,
+  Button,
+  Grid,
+  Container,
+  makeStyles,
+} from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    marginTop: theme.spacing(4),
+  },
+  form: {
+    width: "100%",
+    marginTop: theme.spacing(2),
+  },
+  button: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 const SignIn = ({ onSignIn }) => {
+  const classes = useStyles();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -41,38 +63,55 @@ const SignIn = ({ onSignIn }) => {
   };
 
   return (
-    <div>
-      <h2>Sign In</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <button type="submit">Sign In</button>
+    <Container component="main" maxWidth="xs" className={classes.root}>
+      <Typography component="h1" variant="h5">
+        Sign In
+      </Typography>
+      <form className={classes.form} onSubmit={handleSubmit}>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          id="email"
+          label="Email"
+          name="email"
+          autoComplete="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          name="password"
+          label="Password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+        {error && <Typography color="error">{error}</Typography>}
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.button}
+        >
+          Sign In
+        </Button>
       </form>
-      <p>
-        Don't have an account? <Link to="/signup">Sign Up</Link>
-      </p>
-    </div>
+      <Grid container justify="center">
+        <Grid item>
+          <Link to="/signup" variant="body2">
+            Don't have an account? Sign Up
+          </Link>
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 

@@ -1,8 +1,14 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import SignIn from "./Components/SignIn";
 import SignUp from "./Components/SignUp";
 import Dashboard from "./Components/Dashboard";
+import UpdateProfileForm from "./Components/UpdateProfileForm";
 
 function App() {
   const [userEmail, setUserEmail] = useState(null);
@@ -16,11 +22,13 @@ function App() {
     setUserEmail(null);
   };
 
-  console.log("User email:", userEmail); // Debugging
+  console.log("User email:", userEmail); 
 
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Navigate to="/signup" />} />{" "}
+     
         <Route path="/signin" element={<SignIn onSignIn={handleSignIn} />} />
         <Route path="/signup" element={<SignUp />} />
         <Route
@@ -28,6 +36,10 @@ function App() {
           element={
             <Dashboard userEmail={userEmail} onSignOut={handleSignOut} />
           }
+        />
+        <Route
+          path="/dashboard/:email/edit"
+          element={<UpdateProfileForm userEmail={userEmail} />}
         />
       </Routes>
     </Router>
